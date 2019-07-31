@@ -1,0 +1,42 @@
+{
+  "name": "dot-menu",
+  "version": "1.0.0",
+  "description": "A ReactJS UI framework to generate a dotted menu on the side",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "./node_modules/.bin/babel src --out-file index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mjoellnier/dot-menu.git"
+  },
+  "keywords": [
+    "Menu",
+    "ReactJS"
+  ],
+  "author": "Max Wuest",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mjoellnier/dot-menu/issues"
+  },
+  "homepage": "https://github.com/mjoellnier/dot-menu#readme",
+  "peerDependencies": {
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.5.5",
+    "@babel/core": "^7.5.5",
+    "@babel/preset-env": "^7.5.5",
+    "@babel/preset-react": "^7.0.0",
+    "css-loader": "^3.1.0",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "style-loader": "^0.23.1"
+  },
+  "dependencies": {
+    "@babel/plugin-proposal-class-properties": "^7.5.5",
+    "react-svg": "^10.0.13"
+  }
+}
