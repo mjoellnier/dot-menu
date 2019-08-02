@@ -1,13 +1,15 @@
 import React, { Component } from "react";
+import "./src/index.css";
 
 export default class DummyComponent extends Component {
   createPages = () => {
-    let backgroundColor;
     let pages = this.props.children.map(content => {
+      let backgroundColor = "";
       console.log(content);
       if (content.props.backgroundColor) {
         backgroundColor = content.props.backgroundColor;
-      } else {
+      }
+      if (content.props.backgroundColor === "RANDOM") {
         backgroundColor = this.getRandomColor();
       }
       return (
@@ -34,9 +36,97 @@ export default class DummyComponent extends Component {
     return color;
   };
 
-  createDots = () => {};
+  createDots = () => {
+    // Get a reference to the <path>
+    // var path = document.querySelector("#star-path");
+
+    // Get length of path... ~577px in this demo
+    // var pathLength = path.getTotalLength();
+
+    let navDots = [];
+    let y = 0;
+    for (let i = 0; i < this.props.children.length; i++) {
+      y = y + 50;
+      if (i != 0) {
+        navDots.push(
+          <line
+            x1="50"
+            y1={y - 43}
+            x2="50"
+            y2={y}
+            stroke="darkgray"
+            strokeWidth="2"
+          />
+        );
+      }
+      navDots.push(
+        <circle
+          cx="50"
+          cy={y}
+          r="7"
+          stroke="gray"
+          stroke-width="2"
+          fill="darkgray"
+          className="navDotCircle"
+        />
+      );
+    }
+
+    return (
+      <svg height={y + 25}>
+        {navDots}
+        {/* <path
+          id="menu-path"
+          fill="none"
+          stroke="black"
+          stroke-width="2"
+          d=" ... "
+        /> */}
+      </svg>
+    );
+
+    // let dots = this.props.children.map(content => {
+    //   return (
+    //     <svg width="100" height="200">
+    //       <circle
+    //         cx="50"
+    //         cy="50"
+    //         r="40"
+    //         stroke="green"
+    //         stroke-width="4"
+    //         fill="yellow"
+    //       />
+    //       <line
+    //         x1="50"
+    //         y1="100"
+    //         x2="50"
+    //         y2="200"
+    //         stroke="rgb(255,0,0)"
+    //         strokeWidth="2"
+    //       />
+    //     </svg>
+    //   );
+    // });
+    // return dots;
+  };
 
   render() {
-    return <div>{this.createPages()}</div>;
+    return (
+      <div>
+        <div
+          style={{
+            position: "fixed",
+            width: "100vw",
+            height: "100vh",
+            display: "flex",
+            justifyContent: "center",
+            flexDirection: "column"
+          }}
+        >
+          {this.createDots()}
+        </div>
+        {this.createPages()}
+      </div>
+    );
   }
 }

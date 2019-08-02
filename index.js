@@ -7,6 +7,8 @@ exports["default"] = void 0;
 
 var _react = _interopRequireWildcard(require("react"));
 
+require("./src/index.css");
+
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj["default"] = obj; return newObj; } }
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -48,14 +50,15 @@ function (_Component) {
     _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(DummyComponent)).call.apply(_getPrototypeOf2, [this].concat(args)));
 
     _defineProperty(_assertThisInitialized(_this), "createPages", function () {
-      var backgroundColor;
-
       var pages = _this.props.children.map(function (content) {
+        var backgroundColor = "";
         console.log(content);
 
         if (content.props.backgroundColor) {
           backgroundColor = content.props.backgroundColor;
-        } else {
+        }
+
+        if (content.props.backgroundColor === "RANDOM") {
           backgroundColor = _this.getRandomColor();
         }
 
@@ -82,7 +85,65 @@ function (_Component) {
       return color;
     });
 
-    _defineProperty(_assertThisInitialized(_this), "createDots", function () {});
+    _defineProperty(_assertThisInitialized(_this), "createDots", function () {
+      // Get a reference to the <path>
+      // var path = document.querySelector("#star-path");
+      // Get length of path... ~577px in this demo
+      // var pathLength = path.getTotalLength();
+      var navDots = [];
+      var y = 0;
+
+      for (var i = 0; i < _this.props.children.length; i++) {
+        y = y + 50;
+
+        if (i != 0) {
+          navDots.push(_react["default"].createElement("line", {
+            x1: "50",
+            y1: y - 43,
+            x2: "50",
+            y2: y,
+            stroke: "darkgray",
+            strokeWidth: "2"
+          }));
+        }
+
+        navDots.push(_react["default"].createElement("circle", {
+          cx: "50",
+          cy: y,
+          r: "7",
+          stroke: "gray",
+          "stroke-width": "2",
+          fill: "darkgray",
+          className: "navDotCircle"
+        }));
+      }
+
+      return _react["default"].createElement("svg", {
+        height: y + 25
+      }, navDots); // let dots = this.props.children.map(content => {
+      //   return (
+      //     <svg width="100" height="200">
+      //       <circle
+      //         cx="50"
+      //         cy="50"
+      //         r="40"
+      //         stroke="green"
+      //         stroke-width="4"
+      //         fill="yellow"
+      //       />
+      //       <line
+      //         x1="50"
+      //         y1="100"
+      //         x2="50"
+      //         y2="200"
+      //         stroke="rgb(255,0,0)"
+      //         strokeWidth="2"
+      //       />
+      //     </svg>
+      //   );
+      // });
+      // return dots;
+    });
 
     return _this;
   }
@@ -90,7 +151,16 @@ function (_Component) {
   _createClass(DummyComponent, [{
     key: "render",
     value: function render() {
-      return _react["default"].createElement("div", null, this.createPages());
+      return _react["default"].createElement("div", null, _react["default"].createElement("div", {
+        style: {
+          position: "fixed",
+          width: "100vw",
+          height: "100vh",
+          display: "flex",
+          justifyContent: "center",
+          flexDirection: "column"
+        }
+      }, this.createDots()), this.createPages());
     }
   }]);
 
