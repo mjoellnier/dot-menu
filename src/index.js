@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Tooltip } from "react-svg-tooltip";
 import "./src/index.css";
 
 export default class DummyComponent extends Component {
@@ -45,8 +46,11 @@ export default class DummyComponent extends Component {
 
     let navDots = [];
     let y = 0;
+    let refs = [];
+    console.log("Children: ", this.props.children);
     for (let i = 0; i < this.props.children.length; i++) {
       y = y + 50;
+      refs[i] = React.createRef();
       if (i != 0) {
         navDots.push(
           <line
@@ -60,15 +64,32 @@ export default class DummyComponent extends Component {
         );
       }
       navDots.push(
-        <circle
-          cx="50"
-          cy={y}
-          r="7"
-          stroke="gray"
-          stroke-width="2"
-          fill="darkgray"
-          className="navDotCircle"
-        />
+        <>
+          <circle
+            cx="50"
+            cy={y}
+            r="7"
+            stroke="gray"
+            stroke-width="2"
+            fill="darkgray"
+            className="navDotCircle"
+            ref={refs[i]}
+          />
+          <Tooltip triggerRef={refs[i]}>
+            <rect
+              x={2}
+              y={2}
+              // width={10}
+              // height={5}
+              rx={0.5}
+              ry={0.5}
+              fill="black"
+            />
+            <text x={5} y={5} fill="white">
+              {this.props.children[i].props.title}
+            </text>
+          </Tooltip>
+        </>
       );
     }
 

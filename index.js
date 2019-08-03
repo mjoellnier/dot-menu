@@ -7,6 +7,8 @@ exports["default"] = void 0;
 
 var _react = _interopRequireWildcard(require("react"));
 
+var _reactSvgTooltip = require("react-svg-tooltip");
+
 require("./src/index.css");
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj["default"] = obj; return newObj; } }
@@ -92,9 +94,12 @@ function (_Component) {
       // var pathLength = path.getTotalLength();
       var navDots = [];
       var y = 0;
+      var refs = [];
+      console.log("Children: ", _this.props.children);
 
       for (var i = 0; i < _this.props.children.length; i++) {
         y = y + 50;
+        refs[i] = _react["default"].createRef();
 
         if (i != 0) {
           navDots.push(_react["default"].createElement("line", {
@@ -107,15 +112,30 @@ function (_Component) {
           }));
         }
 
-        navDots.push(_react["default"].createElement("circle", {
+        navDots.push(_react["default"].createElement(_react["default"].Fragment, null, _react["default"].createElement("circle", {
           cx: "50",
           cy: y,
           r: "7",
           stroke: "gray",
           "stroke-width": "2",
           fill: "darkgray",
-          className: "navDotCircle"
-        }));
+          className: "navDotCircle",
+          ref: refs[i]
+        }), _react["default"].createElement(_reactSvgTooltip.Tooltip, {
+          triggerRef: refs[i]
+        }, _react["default"].createElement("rect", {
+          x: 2,
+          y: 2 // width={10}
+          // height={5}
+          ,
+          rx: 0.5,
+          ry: 0.5,
+          fill: "black"
+        }), _react["default"].createElement("text", {
+          x: 5,
+          y: 5,
+          fill: "white"
+        }, _this.props.children[i].props.title))));
       }
 
       return _react["default"].createElement("svg", {
