@@ -1,12 +1,23 @@
 import React, { Component } from "react";
+import { ScrollPercentage } from "react-scroll-percentage";
 import { Tooltip } from "react-svg-tooltip";
 import "./src/index.css";
 
+let pages;
+
 export default class DummyComponent extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      percentage: 0,
+      delta: 1 / (this.props.children.length + 1)
+    };
+    this.createPages();
+  }
+
   createPages = () => {
-    let pages = this.props.children.map(content => {
+    pages = this.props.children.map(content => {
       let backgroundColor = "";
-      console.log(content);
       if (content.props.backgroundColor) {
         backgroundColor = content.props.backgroundColor;
       }
@@ -25,7 +36,7 @@ export default class DummyComponent extends Component {
         </div>
       );
     });
-    return pages;
+    // return pages;
   };
 
   getRandomColor = () => {
@@ -47,22 +58,21 @@ export default class DummyComponent extends Component {
     let navDots = [];
     let y = 0;
     let refs = [];
-    console.log("Children: ", this.props.children);
     for (let i = 0; i < this.props.children.length; i++) {
       y = y + 50;
       refs[i] = React.createRef();
-      if (i != 0) {
-        navDots.push(
-          <line
-            x1="50"
-            y1={y - 43}
-            x2="50"
-            y2={y}
-            stroke="darkgray"
-            strokeWidth="2"
-          />
-        );
-      }
+      // if (i != 0) {
+      //   navDots.push(
+      //     <line
+      //       x1="50"
+      //       y1={y - 43}
+      //       x2="50"
+      //       y2={y}
+      //       stroke="darkgray"
+      //       strokeWidth="2"
+      //     />
+      //   );
+      // }
       navDots.push(
         <>
           <circle
@@ -92,17 +102,21 @@ export default class DummyComponent extends Component {
         </>
       );
     }
-
+    let pathVariable =
+      "M 50,50  v" +
+      ((this.state.percentage - this.state.delta) / (1 - this.state.delta)) * y;
+    // let pathVariable = "M 50,50  v" + this.state.percentage * y;
     return (
       <svg height={y + 25}>
         {navDots}
-        {/* <path
+        <path
           id="menu-path"
           fill="none"
           stroke="black"
           stroke-width="2"
-          d=" ... "
-        /> */}
+          d={pathVariable}
+          pathLength="15"
+        />
       </svg>
     );
 
@@ -133,7 +147,13 @@ export default class DummyComponent extends Component {
 
   render() {
     return (
-      <div>
+      <ScrollPercentage
+        as="div"
+        threshold="0"
+        onChange={(percentage, entry) => {
+          this.setState({ percentage: percentage });
+        }}
+      >
         <div
           style={{
             position: "fixed",
@@ -146,8 +166,8 @@ export default class DummyComponent extends Component {
         >
           {this.createDots()}
         </div>
-        {this.createPages()}
-      </div>
+        {pages}
+      </ScrollPercentage>
     );
   }
 }

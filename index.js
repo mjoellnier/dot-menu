@@ -7,6 +7,8 @@ exports["default"] = void 0;
 
 var _react = _interopRequireWildcard(require("react"));
 
+var _reactScrollPercentage = require("react-scroll-percentage");
+
 var _reactSvgTooltip = require("react-svg-tooltip");
 
 require("./src/index.css");
@@ -33,28 +35,23 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+var pages;
+
 var DummyComponent =
 /*#__PURE__*/
 function (_Component) {
   _inherits(DummyComponent, _Component);
 
-  function DummyComponent() {
-    var _getPrototypeOf2;
-
+  function DummyComponent(props) {
     var _this;
 
     _classCallCheck(this, DummyComponent);
 
-    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
-
-    _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(DummyComponent)).call.apply(_getPrototypeOf2, [this].concat(args)));
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(DummyComponent).call(this, props));
 
     _defineProperty(_assertThisInitialized(_this), "createPages", function () {
-      var pages = _this.props.children.map(function (content) {
+      pages = _this.props.children.map(function (content) {
         var backgroundColor = "";
-        console.log(content);
 
         if (content.props.backgroundColor) {
           backgroundColor = content.props.backgroundColor;
@@ -71,9 +68,7 @@ function (_Component) {
             backgroundColor: backgroundColor
           }
         }, content);
-      });
-
-      return pages;
+      }); // return pages;
     });
 
     _defineProperty(_assertThisInitialized(_this), "getRandomColor", function () {
@@ -95,22 +90,21 @@ function (_Component) {
       var navDots = [];
       var y = 0;
       var refs = [];
-      console.log("Children: ", _this.props.children);
 
       for (var i = 0; i < _this.props.children.length; i++) {
         y = y + 50;
-        refs[i] = _react["default"].createRef();
-
-        if (i != 0) {
-          navDots.push(_react["default"].createElement("line", {
-            x1: "50",
-            y1: y - 43,
-            x2: "50",
-            y2: y,
-            stroke: "darkgray",
-            strokeWidth: "2"
-          }));
-        }
+        refs[i] = _react["default"].createRef(); // if (i != 0) {
+        //   navDots.push(
+        //     <line
+        //       x1="50"
+        //       y1={y - 43}
+        //       x2="50"
+        //       y2={y}
+        //       stroke="darkgray"
+        //       strokeWidth="2"
+        //     />
+        //   );
+        // }
 
         navDots.push(_react["default"].createElement(_react["default"].Fragment, null, _react["default"].createElement("circle", {
           cx: "50",
@@ -138,9 +132,18 @@ function (_Component) {
         }, _this.props.children[i].props.title))));
       }
 
+      var pathVariable = "M 50,50  v" + (_this.state.percentage - _this.state.delta) / (1 - _this.state.delta) * y; // let pathVariable = "M 50,50  v" + this.state.percentage * y;
+
       return _react["default"].createElement("svg", {
         height: y + 25
-      }, navDots); // let dots = this.props.children.map(content => {
+      }, navDots, _react["default"].createElement("path", {
+        id: "menu-path",
+        fill: "none",
+        stroke: "black",
+        "stroke-width": "2",
+        d: pathVariable,
+        pathLength: "15"
+      })); // let dots = this.props.children.map(content => {
       //   return (
       //     <svg width="100" height="200">
       //       <circle
@@ -165,13 +168,30 @@ function (_Component) {
       // return dots;
     });
 
+    _this.state = {
+      percentage: 0,
+      delta: 1 / (_this.props.children.length + 1)
+    };
+
+    _this.createPages();
+
     return _this;
   }
 
   _createClass(DummyComponent, [{
     key: "render",
     value: function render() {
-      return _react["default"].createElement("div", null, _react["default"].createElement("div", {
+      var _this2 = this;
+
+      return _react["default"].createElement(_reactScrollPercentage.ScrollPercentage, {
+        as: "div",
+        threshold: "0",
+        onChange: function onChange(percentage, entry) {
+          _this2.setState({
+            percentage: percentage
+          });
+        }
+      }, _react["default"].createElement("div", {
         style: {
           position: "fixed",
           width: "100vw",
@@ -180,7 +200,7 @@ function (_Component) {
           justifyContent: "center",
           flexDirection: "column"
         }
-      }, this.createDots()), this.createPages());
+      }, this.createDots()), pages);
     }
   }]);
 
@@ -188,6 +208,98 @@ function (_Component) {
 }(_react.Component);
 
 exports["default"] = DummyComponent;
+// class DynamicBezierCurve extends React.Component {
+//   constructor(props) {
+//     super(props);
+//     // As the user scrolls through our scrollable area,
+//     // the scrollRatio represents the amount completed,
+//     // from 0 (way at the bottom) to 1 (at the top).
+//     this.state = {
+//       scrollRatio: 0
+//     };
+//     // This live-editing environment doesn't support
+//     // property-initializer syntax, so I'm doing my
+//     // binds in the constructor. 🤷
+//     this.handleScroll = this.handleScroll.bind(this);
+//   }
+//   componentDidMount() {
+//     window.addEventListener("scroll", this.handleScroll);
+//   }
+//   componentWillUnmount() {
+//     window.removeEventListener("scroll", this.handleScroll);
+//   }
+//   handleScroll(ev) {
+//     const windowHeight = window.innerHeight;
+//     const svgBB = this.node.getBoundingClientRect();
+//     const pixelsScrolled = windowHeight - svgBB.top;
+//     let scrollRatio = pixelsScrolled / windowHeight;
+//     // We don't care about the negative values when it's
+//     // below the viewport, or the greater-than-1 values when
+//     // it's above the viewport.
+//     scrollRatio = clamp(scrollRatio, 0, 1);
+//     // Small optimization, avoid re-rendering when the
+//     // SVG isn't in the viewport.
+//     if (this.state.scrollRatio !== scrollRatio) {
+//       this.setState({ scrollRatio });
+//     }
+//   }
+//   render() {
+//     const { scrollRatio } = this.state;
+//     // Use our `getInterpolatedValue` function from the
+//     // previous code snippet to figure out the values for
+//     // the start point and the control points.
+//     const startPoint = getInterpolatedValue(
+//       300, // curvy value
+//       0, // flat value
+//       scrollRatio
+//     );
+//     const firstControlPoint = getInterpolatedValue(
+//       -100, // curvy value
+//       0, // flat value
+//       scrollRatio
+//     );
+//     const secondControlPoint = getInterpolatedValue(
+//       450, // curvy value
+//       0, // flat value
+//       scrollRatio
+//     );
+//     // Unlike the other 3 points, the `endPoint` is
+//     // constant, and doesn't need interpolation.
+//     const endPoint = 0;
+//     // Create the SVG path instructions, using our
+//     // interpolated values.
+//     // Unlike previous examples, we want to fill this one
+//     // in, not just make a stroked line. So we need to add
+//     // a couple other lines after the curve, to make sure
+//     // the box fills in correctly.
+//     const instructions = `
+//         M 0,${startPoint}
+//         C 100,${firstControlPoint}
+//           200,${secondControlPoint}
+//           300,${endPoint}
+//         L 300,300
+//         L 0,300
+//       `;
+//     // NOTE: the instructions created assume a 300x300
+//     // viewBox. To make this component more flexible, you
+//     // could set `viewBoxWidth` and `viewBoxHeight`
+//     // variables as props.
+//     return (
+//       <svg ref={node => (this.node = node)} viewBox="0 0 300 300">
+//         <path d={instructions} fill="hotpink" />
+//       </svg>
+//     );
+//   }
+// }
+// // Utility function that clamps a given value to a
+// // specific range (inclusive, between min and max).
+// const clamp = (val, min, max) => Math.max(min, Math.min(max, val));
+// export class DotMenuPage extends Component {
+//   render() {
+//     return <DynamicBezierCurve headerHeight={55} />;
+//   }
+// }
+"use strict";
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
