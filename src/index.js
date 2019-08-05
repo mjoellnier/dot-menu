@@ -36,7 +36,6 @@ export default class DummyComponent extends Component {
         </div>
       );
     });
-    // return pages;
   };
 
   getRandomColor = () => {
@@ -49,30 +48,12 @@ export default class DummyComponent extends Component {
   };
 
   createDots = () => {
-    // Get a reference to the <path>
-    // var path = document.querySelector("#star-path");
-
-    // Get length of path... ~577px in this demo
-    // var pathLength = path.getTotalLength();
-
     let navDots = [];
     let y = 0;
     let refs = [];
     for (let i = 0; i < this.props.children.length; i++) {
       y = y + 50;
       refs[i] = React.createRef();
-      // if (i != 0) {
-      //   navDots.push(
-      //     <line
-      //       x1="50"
-      //       y1={y - 43}
-      //       x2="50"
-      //       y2={y}
-      //       stroke="darkgray"
-      //       strokeWidth="2"
-      //     />
-      //   );
-      // }
       navDots.push(
         <>
           <circle
@@ -86,15 +67,7 @@ export default class DummyComponent extends Component {
             ref={refs[i]}
           />
           <Tooltip triggerRef={refs[i]}>
-            <rect
-              x={2}
-              y={2}
-              // width={10}
-              // height={5}
-              rx={0.5}
-              ry={0.5}
-              fill="black"
-            />
+            <rect x={2} y={2} rx={0.5} ry={0.5} fill="black" />
             <text x={5} y={5} fill="white">
               {this.props.children[i].props.title}
             </text>
@@ -108,7 +81,6 @@ export default class DummyComponent extends Component {
     // let pathVariable = "M 50,50  v" + this.state.percentage * y;
     return (
       <svg height={y + 25}>
-        {navDots}
         <path
           id="menu-path"
           fill="none"
@@ -117,32 +89,9 @@ export default class DummyComponent extends Component {
           d={pathVariable}
           pathLength="15"
         />
+        {navDots}
       </svg>
     );
-
-    // let dots = this.props.children.map(content => {
-    //   return (
-    //     <svg width="100" height="200">
-    //       <circle
-    //         cx="50"
-    //         cy="50"
-    //         r="40"
-    //         stroke="green"
-    //         stroke-width="4"
-    //         fill="yellow"
-    //       />
-    //       <line
-    //         x1="50"
-    //         y1="100"
-    //         x2="50"
-    //         y2="200"
-    //         stroke="rgb(255,0,0)"
-    //         strokeWidth="2"
-    //       />
-    //     </svg>
-    //   );
-    // });
-    // return dots;
   };
 
   render() {
