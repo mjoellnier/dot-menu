@@ -11,7 +11,11 @@ export default class DotMenu extends Component {
     this.state = {
       percentage: 0,
       delta: 1 / (this.props.children.length + 1),
-      ready: false
+      ready: false,
+      dotBorder: this.props.dotBorder ? this.props.dotBorder : "gray",
+      dotFilling: this.props.dotFilling ? this.props.dotFilling : "darkgray",
+      pathColor: this.props.pathColor ? this.props.pathColor : "black",
+      pathWidth: this.props.pathWidth ? this.props.pathWidth : "2"
     };
     this.createPages();
   }
@@ -64,9 +68,9 @@ export default class DotMenu extends Component {
             cx="50"
             cy={y}
             r="7"
-            stroke="gray"
+            stroke={this.state.dotBorder}
             stroke-width="2"
-            fill="darkgray"
+            fill={this.state.dotFilling}
             className="navDotCircle"
             ref={refs[i]}
           />
@@ -76,7 +80,6 @@ export default class DotMenu extends Component {
     let pathVariable =
       "M 50,50  v" +
       ((this.state.percentage - this.state.delta) / (1 - this.state.delta)) * y;
-    let pathColor = this.props.pathColor ? this.props.pathColor : "black";
     return (
       <svg
         height={y + 25}
@@ -87,8 +90,8 @@ export default class DotMenu extends Component {
         <path
           id="menu-path"
           fill="none"
-          stroke={pathColor}
-          stroke-width="2"
+          stroke={this.state.pathColor}
+          stroke-width={this.state.pathWidth}
           d={pathVariable}
           pathLength="15"
         />

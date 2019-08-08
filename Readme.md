@@ -22,7 +22,7 @@ import React from "react";
 
 const App = () => {
   return (
-    <DotMenu right={false}>
+    <DotMenu>
       <DotMenuPage backgroundColor={"RANDOM"} title={"Page 1"}>
         Hello 1
       </DotMenuPage>
@@ -48,10 +48,13 @@ The above example code creates the example which can be seen in the gif.
 
 **`DotMenu` properties**
 
-| Name      | Values      | Default | Description                                                                    |
-| --------- | ----------- | ------- | ------------------------------------------------------------------------------ |
-| right     | true\|false | false   | Determines if the menu is rendered on the right or left                        |
-| pathColor | string      | false   | Determines the color of the propress path. Give it a _normal_ HEX/color string |
+| Name       | Values      | Default  | Description                                                                       |
+| ---------- | ----------- | -------- | --------------------------------------------------------------------------------- |
+| right      | true\|false | false    | Determines if the menu is rendered on the right or left                           |
+| dotFilling | string      | darkgray | Determines the color of the nav dots filling. Give it a _normal_ HEX/color string |
+| dotBorder  | string      | gray     | Determines the color of the nav dots border. Give it a _normal_ HEX/color string  |
+| pathColor  | string      | black    | Determines the color of the propress path. Give it a _normal_ HEX/color string    |
+| pathWidth  | string      | "2"      | Determines the width of the progress path. Give it an integer wrapped as string   |
 
 **`DotMenuPage` properties**
 

@@ -99,24 +99,23 @@ function (_Component) {
           cx: "50",
           cy: y,
           r: "7",
-          stroke: "gray",
+          stroke: _this.state.dotBorder,
           "stroke-width": "2",
-          fill: "darkgray",
+          fill: _this.state.dotFilling,
           className: "navDotCircle",
           ref: refs[i]
         })));
       }
 
       var pathVariable = "M 50,50  v" + (_this.state.percentage - _this.state.delta) / (1 - _this.state.delta) * y;
-      var pathColor = _this.props.pathColor ? _this.props.pathColor : "black";
       return _react["default"].createElement("svg", {
         height: y + 25,
         className: "svgElements " + (_this.state.percentage > 0 ? "fadeIn" : "fadeOut")
       }, _react["default"].createElement("path", {
         id: "menu-path",
         fill: "none",
-        stroke: pathColor,
-        "stroke-width": "2",
+        stroke: _this.state.pathColor,
+        "stroke-width": _this.state.pathWidth,
         d: pathVariable,
         pathLength: "15"
       }), navDots);
@@ -125,7 +124,11 @@ function (_Component) {
     _this.state = {
       percentage: 0,
       delta: 1 / (_this.props.children.length + 1),
-      ready: false
+      ready: false,
+      dotBorder: _this.props.dotBorder ? _this.props.dotBorder : "gray",
+      dotFilling: _this.props.dotFilling ? _this.props.dotFilling : "darkgray",
+      pathColor: _this.props.pathColor ? _this.props.pathColor : "black",
+      pathWidth: _this.props.pathWidth ? _this.props.pathWidth : "2"
     };
 
     _this.createPages();
