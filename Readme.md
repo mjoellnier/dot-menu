@@ -1,17 +1,19 @@
 # Dot-menu
 
-This is a ReactJS plugin to create a Dot-menu for your pages. It is highly customizable and is still unter constructin (besides the fact that this is my very first npm plugin). **PR are highly welcomed!**
+This is a ReactJS plugin to create a Dot-menu for your pages. It is highly customizable and tries to expose as many options as possible.
+
+**It is still under construction (besides the fact that this is my very first npm plugin). So PRs and feedback are highly welcomed!**
 
 ## What is this all about?
 
 ![Dot Menu example gif][example]
 
-This plugin creates the menu on the left side (optionally also on the right side).
+This plugin creates the menu on the left side (optionally also on the right side). The pages content you create will be window filling (`100vw` width and `100vh` heigth).
 
 ## Installation
 
 ```
-// npm upload is coming up!
+npm install @mjoellnier/dot-menu --save
 ```
 
 ## Example Usage
@@ -66,6 +68,7 @@ The above example code creates the example which can be seen in the gif.
 ## Todo
 
 - Write tests!
+- Implement scrolling when pressing on a nav dot
 - Experiment with mobile
 
 [example]: ./example.gif "Dot Menu  example gif"

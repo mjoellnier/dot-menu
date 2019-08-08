@@ -1,6 +1,6 @@
 {
-  "name": "dot-menu",
-  "version": "0.1.0",
+  "name": "@mjoellnier/dot-menu",
+  "version": "1.0.0",
   "description": "A ReactJS UI framework to generate a dotted menu on the side",
   "main": "index.js",
   "scripts": {
@@ -13,7 +13,8 @@
   },
   "keywords": [
     "Menu",
-    "ReactJS"
+    "ReactJS",
+    "UI"
   ],
   "author": "Max Wuest",
   "license": "MIT",
