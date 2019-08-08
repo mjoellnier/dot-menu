@@ -5,7 +5,7 @@ import "./src/index.css";
 
 let pages;
 
-export default class DummyComponent extends Component {
+export default class DotMenu extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -76,15 +76,18 @@ export default class DummyComponent extends Component {
     let pathVariable =
       "M 50,50  v" +
       ((this.state.percentage - this.state.delta) / (1 - this.state.delta)) * y;
+    let pathColor = this.props.pathColor ? this.props.pathColor : "black";
     return (
       <svg
         height={y + 25}
-        className={this.state.percentage > 0 ? "fadeIn" : "fadeOut"}
+        className={
+          "svgElements " + (this.state.percentage > 0 ? "fadeIn" : "fadeOut")
+        }
       >
         <path
           id="menu-path"
           fill="none"
-          stroke="black"
+          stroke={pathColor}
           stroke-width="2"
           d={pathVariable}
           pathLength="15"
@@ -104,14 +107,12 @@ export default class DummyComponent extends Component {
         }}
       >
         <div
-          style={{
-            position: "fixed",
-            width: "100vw",
-            height: "100vh",
-            display: "flex",
-            justifyContent: "center",
-            flexDirection: "column"
-          }}
+          className="svgWrapper"
+          style={
+            this.props.right
+              ? { alignItems: "flex-end" }
+              : { alignItems: "flex-start" }
+          }
         >
           {this.createDots()}
         </div>

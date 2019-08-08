@@ -28,3 +28,16 @@ circle:hover {
   opacity: 1;
   transition: opacity 2s;
 }
+
+.svgElements {
+  width: 100px;
+}
+
+.svgWrapper {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}

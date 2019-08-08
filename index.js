@@ -39,17 +39,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 var pages;
 
-var DummyComponent =
+var DotMenu =
 /*#__PURE__*/
 function (_Component) {
-  _inherits(DummyComponent, _Component);
+  _inherits(DotMenu, _Component);
 
-  function DummyComponent(props) {
+  function DotMenu(props) {
     var _this;
 
-    _classCallCheck(this, DummyComponent);
+    _classCallCheck(this, DotMenu);
 
-    _this = _possibleConstructorReturn(this, _getPrototypeOf(DummyComponent).call(this, props));
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(DotMenu).call(this, props));
 
     _defineProperty(_assertThisInitialized(_this), "createPages", function () {
       pages = _this.props.children.map(function (content, index) {
@@ -108,13 +108,14 @@ function (_Component) {
       }
 
       var pathVariable = "M 50,50  v" + (_this.state.percentage - _this.state.delta) / (1 - _this.state.delta) * y;
+      var pathColor = _this.props.pathColor ? _this.props.pathColor : "black";
       return _react["default"].createElement("svg", {
         height: y + 25,
-        className: _this.state.percentage > 0 ? "fadeIn" : "fadeOut"
+        className: "svgElements " + (_this.state.percentage > 0 ? "fadeIn" : "fadeOut")
       }, _react["default"].createElement("path", {
         id: "menu-path",
         fill: "none",
-        stroke: "black",
+        stroke: pathColor,
         "stroke-width": "2",
         d: pathVariable,
         pathLength: "15"
@@ -132,7 +133,7 @@ function (_Component) {
     return _this;
   }
 
-  _createClass(DummyComponent, [{
+  _createClass(DotMenu, [{
     key: "render",
     value: function render() {
       var _this2 = this;
@@ -146,13 +147,11 @@ function (_Component) {
           });
         }
       }, _react["default"].createElement("div", {
-        style: {
-          position: "fixed",
-          width: "100vw",
-          height: "100vh",
-          display: "flex",
-          justifyContent: "center",
-          flexDirection: "column"
+        className: "svgWrapper",
+        style: this.props.right ? {
+          alignItems: "flex-end"
+        } : {
+          alignItems: "flex-start"
         }
       }, this.createDots()), pages, _react["default"].createElement(_reactTooltip["default"], {
         id: "toolTipRemoteId",
@@ -163,10 +162,10 @@ function (_Component) {
     }
   }]);
 
-  return DummyComponent;
+  return DotMenu;
 }(_react.Component);
 
-exports["default"] = DummyComponent;
+exports["default"] = DotMenu;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
