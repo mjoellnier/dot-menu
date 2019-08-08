@@ -95,7 +95,7 @@ function (_Component) {
         refs[i] = _react["default"].createRef();
         navDots.push(_react["default"].createElement(_react["default"].Fragment, null, _react["default"].createElement("circle", {
           "data-tip": _this.props.children[i].props.title,
-          "data-for": "helloWorldTest",
+          "data-for": "toolTipRemoteId",
           cx: "50",
           cy: y,
           r: "7",
@@ -103,22 +103,14 @@ function (_Component) {
           "stroke-width": "2",
           fill: "darkgray",
           className: "navDotCircle",
-          ref: refs[i] // onClick={() => {
-          //   $("html,body").animate(
-          //     {
-          //       scrollTop: $("#" + i).offset().top
-          //     },
-          //     "slow"
-          //   );
-          // }}
-
+          ref: refs[i]
         })));
       }
 
-      var pathVariable = "M 50,50  v" + (_this.state.percentage - _this.state.delta) / (1 - _this.state.delta) * y; // let pathVariable = "M 50,50  v" + this.state.percentage * y;
-
+      var pathVariable = "M 50,50  v" + (_this.state.percentage - _this.state.delta) / (1 - _this.state.delta) * y;
       return _react["default"].createElement("svg", {
-        height: y + 25
+        height: y + 25,
+        className: _this.state.percentage > 0 ? "fadeIn" : "fadeOut"
       }, _react["default"].createElement("path", {
         id: "menu-path",
         fill: "none",
@@ -131,7 +123,8 @@ function (_Component) {
 
     _this.state = {
       percentage: 0,
-      delta: 1 / (_this.props.children.length + 1)
+      delta: 1 / (_this.props.children.length + 1),
+      ready: false
     };
 
     _this.createPages();
@@ -162,7 +155,7 @@ function (_Component) {
           flexDirection: "column"
         }
       }, this.createDots()), pages, _react["default"].createElement(_reactTooltip["default"], {
-        id: "helloWorldTest",
+        id: "toolTipRemoteId",
         place: "right",
         type: "dark",
         effect: "solid"

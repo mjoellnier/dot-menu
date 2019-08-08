@@ -10,7 +10,8 @@ export default class DummyComponent extends Component {
     super(props);
     this.state = {
       percentage: 0,
-      delta: 1 / (this.props.children.length + 1)
+      delta: 1 / (this.props.children.length + 1),
+      ready: false
     };
     this.createPages();
   }
@@ -59,7 +60,7 @@ export default class DummyComponent extends Component {
         <>
           <circle
             data-tip={this.props.children[i].props.title}
-            data-for="helloWorldTest"
+            data-for="toolTipRemoteId"
             cx="50"
             cy={y}
             r="7"
@@ -75,9 +76,11 @@ export default class DummyComponent extends Component {
     let pathVariable =
       "M 50,50  v" +
       ((this.state.percentage - this.state.delta) / (1 - this.state.delta)) * y;
-    // let pathVariable = "M 50,50  v" + this.state.percentage * y;
     return (
-      <svg height={y + 25}>
+      <svg
+        height={y + 25}
+        className={this.state.percentage > 0 ? "fadeIn" : "fadeOut"}
+      >
         <path
           id="menu-path"
           fill="none"
@@ -114,7 +117,7 @@ export default class DummyComponent extends Component {
         </div>
         {pages}
         <ReactTooltip
-          id="helloWorldTest"
+          id="toolTipRemoteId"
           place="right"
           type="dark"
           effect="solid"
