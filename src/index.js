@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { ScrollPercentage } from "react-scroll-percentage";
-import { Tooltip } from "react-svg-tooltip";
+import ReactTooltip from "react-tooltip";
 import "./src/index.css";
 
 let pages;
@@ -16,7 +16,7 @@ export default class DummyComponent extends Component {
   }
 
   createPages = () => {
-    pages = this.props.children.map(content => {
+    pages = this.props.children.map((content, index) => {
       let backgroundColor = "";
       if (content.props.backgroundColor) {
         backgroundColor = content.props.backgroundColor;
@@ -26,6 +26,7 @@ export default class DummyComponent extends Component {
       }
       return (
         <div
+          id={index}
           style={{
             width: "100vw",
             height: "100vh",
@@ -57,6 +58,8 @@ export default class DummyComponent extends Component {
       navDots.push(
         <>
           <circle
+            data-tip={this.props.children[i].props.title}
+            data-for="helloWorldTest"
             cx="50"
             cy={y}
             r="7"
@@ -66,12 +69,6 @@ export default class DummyComponent extends Component {
             className="navDotCircle"
             ref={refs[i]}
           />
-          <Tooltip triggerRef={refs[i]}>
-            <rect x={2} y={2} rx={0.5} ry={0.5} fill="black" />
-            <text x={5} y={5} fill="white">
-              {this.props.children[i].props.title}
-            </text>
-          </Tooltip>
         </>
       );
     }
@@ -116,6 +113,12 @@ export default class DummyComponent extends Component {
           {this.createDots()}
         </div>
         {pages}
+        <ReactTooltip
+          id="helloWorldTest"
+          place="right"
+          type="dark"
+          effect="solid"
+        />
       </ScrollPercentage>
     );
   }

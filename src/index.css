@@ -1,3 +1,7 @@
+html {
+  scroll-behavior: smooth;
+}
+
 .windowPage {
   width: 100vw;
   height: 100vh;
@@ -13,5 +17,5 @@
 }
 
 circle:hover {
-  fill: red;
+  cursor: pointer;
 }

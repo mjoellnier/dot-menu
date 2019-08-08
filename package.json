@@ -38,7 +38,7 @@
     "css-loader": "^3.1.0",
     "react-scroll-percentage": "^4.1.0",
     "react-svg": "^10.0.13",
-    "react-svg-tooltip": "0.0.11",
+    "react-tooltip": "^3.10.0",
     "style-loader": "^0.23.1",
     "styled-components": "^4.3.2"
   }
