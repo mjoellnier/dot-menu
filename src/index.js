@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { ScrollPercentage } from "react-scroll-percentage";
 import ReactTooltip from "react-tooltip";
 import "./src/index.css";
+import { Link, animateScroll as scroll } from "react-scroll";
 
 let pages;
 
@@ -31,7 +32,7 @@ export default class DotMenu extends Component {
       }
       return (
         <div
-          id={index}
+          id={"section_" + index}
           style={{
             width: "100vw",
             height: "100vh",
@@ -62,18 +63,20 @@ export default class DotMenu extends Component {
       refs[i] = React.createRef();
       navDots.push(
         <>
-          <circle
-            data-tip={this.props.children[i].props.title}
-            data-for="toolTipRemoteId"
-            cx="50"
-            cy={y}
-            r="7"
-            stroke={this.state.dotBorder}
-            stroke-width="2"
-            fill={this.state.dotFilling}
-            className="navDotCircle"
-            ref={refs[i]}
-          />
+          <Link to={"section_" + i}>
+            <circle
+              data-tip={this.props.children[i].props.title}
+              data-for="toolTipRemoteId"
+              cx="50"
+              cy={y}
+              r="7"
+              stroke={this.state.dotBorder}
+              stroke-width="2"
+              fill={this.state.dotFilling}
+              className="navDotCircle"
+              ref={refs[i]}
+            />
+          </Link>
         </>
       );
     }

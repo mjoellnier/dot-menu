@@ -13,6 +13,8 @@ var _reactTooltip = _interopRequireDefault(require("react-tooltip"));
 
 require("./src/index.css");
 
+var _reactScroll = require("react-scroll");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj["default"] = obj; return newObj; } }
@@ -64,7 +66,7 @@ function (_Component) {
         }
 
         return _react["default"].createElement("div", {
-          id: index,
+          id: "section_" + index,
           style: {
             width: "100vw",
             height: "100vh",
@@ -93,7 +95,9 @@ function (_Component) {
       for (var i = 0; i < _this.props.children.length; i++) {
         y = y + 50;
         refs[i] = _react["default"].createRef();
-        navDots.push(_react["default"].createElement(_react["default"].Fragment, null, _react["default"].createElement("circle", {
+        navDots.push(_react["default"].createElement(_react["default"].Fragment, null, _react["default"].createElement(_reactScroll.Link, {
+          to: "section_" + i
+        }, _react["default"].createElement("circle", {
           "data-tip": _this.props.children[i].props.title,
           "data-for": "toolTipRemoteId",
           cx: "50",
@@ -104,7 +108,7 @@ function (_Component) {
           fill: _this.state.dotFilling,
           className: "navDotCircle",
           ref: refs[i]
-        })));
+        }))));
       }
 
       var pathVariable = "M 50,50  v" + (_this.state.percentage - _this.state.delta) / (1 - _this.state.delta) * y;
