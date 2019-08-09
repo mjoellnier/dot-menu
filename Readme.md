@@ -65,10 +65,17 @@ The above example code creates the example which can be seen in the gif.
 | backgroundColor | string\|"RANDOM" | none    | The page background color. Give it a _normal_ HEX/color string or the string _RANDOM_ when you love surprises! |
 | title           | string           | none    | The title to be rendered in the mouse over box                                                                 |
 
+## Changelog
+
+| Version | Changes                                          |
+| ------- | ------------------------------------------------ |
+| 1.0.0   | Initial Release                                  |
+| 1.0.1   | Adding smooth scrolling to page on nav dot click |
+
 ## Todo
 
 - Write tests!
-- Implement scrolling when pressing on a nav dot
+- ~~Implement scrolling when pressing on a nav dot~~
 - Experiment with mobile
 
 [example]: ./example.gif "Dot Menu  example gif"
