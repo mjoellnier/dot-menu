@@ -19,7 +19,7 @@ npm install @mjoellnier/dot-menu --save
 ## Example Usage
 
 ```javascript
-import DotMenu, { DotMenuPage } from "dot-menu";
+import DotMenu, { DotMenuPage } from "@mjoellnier/dot-menu";
 import React from "react";
 
 const App = () => {
