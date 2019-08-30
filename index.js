@@ -115,7 +115,7 @@ function (_Component) {
       return _react["default"].createElement("svg", {
         height: y + 25,
         className: "svgElements " + (_this.state.percentage > 0 ? "fadeIn" : "fadeOut")
-      }, _react["default"].createElement("path", {
+      }, _this.props.hidePath ? null : _react["default"].createElement("path", {
         id: "menu-path",
         fill: "none",
         stroke: _this.state.pathColor,

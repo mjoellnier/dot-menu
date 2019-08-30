@@ -57,6 +57,7 @@ The above example code creates the example which can be seen in the gif.
 | dotBorder  | string      | gray     | Determines the color of the nav dots border. Give it a _normal_ HEX/color string  |
 | pathColor  | string      | black    | Determines the color of the propress path. Give it a _normal_ HEX/color string    |
 | pathWidth  | string      | "2"      | Determines the width of the progress path. Give it an integer wrapped as string   |
+| hidePath   | true\|false | false    | Hides the scroll progress bar if set to true                                      |
 
 **`DotMenuPage` properties**
 

@@ -90,14 +90,17 @@ export default class DotMenu extends Component {
           "svgElements " + (this.state.percentage > 0 ? "fadeIn" : "fadeOut")
         }
       >
-        <path
-          id="menu-path"
-          fill="none"
-          stroke={this.state.pathColor}
-          stroke-width={this.state.pathWidth}
-          d={pathVariable}
-          pathLength="15"
-        />
+        {this.props.hidePath ? null : (
+          <path
+            id="menu-path"
+            fill="none"
+            stroke={this.state.pathColor}
+            stroke-width={this.state.pathWidth}
+            d={pathVariable}
+            pathLength="15"
+          />
+        )}
+
         {navDots}
       </svg>
     );
