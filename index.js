@@ -39,7 +39,74 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+var keys = {
+  37: 1,
+  38: 1,
+  39: 1,
+  40: 1
+};
 var pages;
+var index = 0;
+var maxIndex = -1;
+
+function preventDefault(e) {
+  e = e || window.event;
+  if (e.preventDefault) e.preventDefault();
+  e.returnValue = false;
+}
+
+function preventDefaultForScrollKeys(e) {
+  if (keys[e.keyCode]) {
+    preventDefault(e);
+    return false;
+  }
+}
+
+function scrollFunction(event) {
+  window.removeEventListener("wheel", scrollFunction, {
+    passive: true
+  });
+
+  if (event.deltaY < 0 && index > 0) {
+    index--;
+
+    _reactScroll.scroller.scrollTo("section_" + index, {
+      duration: 1500,
+      delay: 0,
+      smooth: true,
+      isDynamic: true
+    });
+  } else if (event.deltaY > 0 && index < maxIndex) {
+    index++;
+
+    _reactScroll.scroller.scrollTo("section_" + index, {
+      duration: 1500,
+      delay: 0,
+      smooth: true,
+      isDynamic: true
+    });
+  }
+
+  setTimeout(function () {
+    window.addEventListener("wheel", scrollFunction);
+  }, 1500);
+}
+
+function disableScroll() {
+  if (window.addEventListener) // older FF
+    window.addEventListener("DOMMouseScroll", preventDefault, false);
+  document.addEventListener("wheel", preventDefault, {
+    passive: false
+  }); // Disable scrolling in Chrome
+
+  window.onwheel = preventDefault; // modern standard
+
+  window.onmousewheel = document.onmousewheel = preventDefault; // older browsers, IE
+
+  window.ontouchmove = preventDefault; // mobile
+
+  document.onkeydown = preventDefaultForScrollKeys;
+}
 
 var DotMenu =
 /*#__PURE__*/
@@ -55,6 +122,7 @@ function (_Component) {
 
     _defineProperty(_assertThisInitialized(_this), "createPages", function () {
       pages = _this.props.children.map(function (content, index) {
+        maxIndex++;
         var backgroundColor = "";
 
         if (content.props.backgroundColor) {
@@ -65,14 +133,19 @@ function (_Component) {
           backgroundColor = _this.getRandomColor();
         }
 
-        return _react["default"].createElement("div", {
+        return _react["default"].createElement(_reactScroll.Element, {
+          name: "section_" + index
+        }, _react["default"].createElement("div", {
           id: "section_" + index,
           style: {
             width: "100vw",
             height: "100vh",
             backgroundColor: backgroundColor
+          },
+          onScroll: function onScroll(event) {
+            return console.log("event: ", event);
           }
-        }, content);
+        }, content));
       });
     });
 
@@ -92,11 +165,14 @@ function (_Component) {
       var y = 0;
       var refs = [];
 
-      for (var i = 0; i < _this.props.children.length; i++) {
+      var _loop = function _loop(i) {
         y = y + 50;
         refs[i] = _react["default"].createRef();
         navDots.push(_react["default"].createElement(_react["default"].Fragment, null, _react["default"].createElement(_reactScroll.Link, {
-          to: "section_" + i
+          to: "section_" + i,
+          onClick: function onClick() {
+            return index = i;
+          }
         }, _react["default"].createElement("circle", {
           "data-tip": _this.props.children[i].props.title,
           "data-for": "toolTipRemoteId",
@@ -109,13 +185,17 @@ function (_Component) {
           className: "navDotCircle",
           ref: refs[i]
         }))));
+      };
+
+      for (var i = 0; i < _this.props.children.length; i++) {
+        _loop(i);
       }
 
       var pathVariable = "M 50,50  v" + (_this.state.percentage - _this.state.delta) / (1 - _this.state.delta) * y;
       return _react["default"].createElement("svg", {
         height: y + 25,
         className: "svgElements " + (_this.state.percentage > 0 ? "fadeIn" : "fadeOut")
-      }, _react["default"].createElement("path", {
+      }, _this.props.hidePath ? null : _react["default"].createElement("path", {
         id: "menu-path",
         fill: "none",
         stroke: _this.state.pathColor,
@@ -141,6 +221,19 @@ function (_Component) {
   }
 
   _createClass(DotMenu, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      if (this.props.windowScrolling) {
+        disableScroll();
+        window.addEventListener("wheel", scrollFunction);
+      }
+    }
+  }, {
+    key: "componentWillUnmount",
+    value: function componentWillUnmount() {
+      window.removeEventListener("wheel", scrollFunction);
+    }
+  }, {
     key: "render",
     value: function render() {
       var _this2 = this;

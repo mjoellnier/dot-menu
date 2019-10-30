@@ -2,9 +2,60 @@ import React, { Component } from "react";
 import { ScrollPercentage } from "react-scroll-percentage";
 import ReactTooltip from "react-tooltip";
 import "./src/index.css";
-import { Link, animateScroll as scroll } from "react-scroll";
+import { Link, scroller, Element } from "react-scroll";
 
+let keys = { 37: 1, 38: 1, 39: 1, 40: 1 };
 let pages;
+let index = 0;
+let maxIndex = -1;
+
+function preventDefault(e) {
+  e = e || window.event;
+  if (e.preventDefault) e.preventDefault();
+  e.returnValue = false;
+}
+
+function preventDefaultForScrollKeys(e) {
+  if (keys[e.keyCode]) {
+    preventDefault(e);
+    return false;
+  }
+}
+
+function scrollFunction(event) {
+  window.removeEventListener("wheel", scrollFunction, { passive: true });
+  if (event.deltaY < 0 && index > 0) {
+    index--;
+    scroller.scrollTo("section_" + index, {
+      duration: 1500,
+      delay: 0,
+      smooth: true,
+      isDynamic: true
+    });
+  } else if (event.deltaY > 0 && index < maxIndex) {
+    index++;
+    scroller.scrollTo("section_" + index, {
+      duration: 1500,
+      delay: 0,
+      smooth: true,
+      isDynamic: true
+    });
+  }
+  setTimeout(() => {
+    window.addEventListener("wheel", scrollFunction);
+  }, 1500);
+}
+
+function disableScroll() {
+  if (window.addEventListener)
+    // older FF
+    window.addEventListener("DOMMouseScroll", preventDefault, false);
+  document.addEventListener("wheel", preventDefault, { passive: false }); // Disable scrolling in Chrome
+  window.onwheel = preventDefault; // modern standard
+  window.onmousewheel = document.onmousewheel = preventDefault; // older browsers, IE
+  window.ontouchmove = preventDefault; // mobile
+  document.onkeydown = preventDefaultForScrollKeys;
+}
 
 export default class DotMenu extends Component {
   constructor(props) {
@@ -21,8 +72,20 @@ export default class DotMenu extends Component {
     this.createPages();
   }
 
+  componentDidMount() {
+    if (this.props.windowScrolling) {
+      disableScroll();
+      window.addEventListener("wheel", scrollFunction);
+    }
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("wheel", scrollFunction);
+  }
+
   createPages = () => {
     pages = this.props.children.map((content, index) => {
+      maxIndex++;
       let backgroundColor = "";
       if (content.props.backgroundColor) {
         backgroundColor = content.props.backgroundColor;
@@ -31,16 +94,19 @@ export default class DotMenu extends Component {
         backgroundColor = this.getRandomColor();
       }
       return (
-        <div
-          id={"section_" + index}
-          style={{
-            width: "100vw",
-            height: "100vh",
-            backgroundColor: backgroundColor
-          }}
-        >
-          {content}
-        </div>
+        <Element name={"section_" + index}>
+          <div
+            id={"section_" + index}
+            style={{
+              width: "100vw",
+              height: "100vh",
+              backgroundColor: backgroundColor
+            }}
+            onScroll={event => console.log("event: ", event)}
+          >
+            {content}
+          </div>
+        </Element>
       );
     });
   };
@@ -63,7 +129,7 @@ export default class DotMenu extends Component {
       refs[i] = React.createRef();
       navDots.push(
         <>
-          <Link to={"section_" + i}>
+          <Link to={"section_" + i} onClick={() => (index = i)}>
             <circle
               data-tip={this.props.children[i].props.title}
               data-for="toolTipRemoteId"
@@ -90,14 +156,16 @@ export default class DotMenu extends Component {
           "svgElements " + (this.state.percentage > 0 ? "fadeIn" : "fadeOut")
         }
       >
-        <path
-          id="menu-path"
-          fill="none"
-          stroke={this.state.pathColor}
-          stroke-width={this.state.pathWidth}
-          d={pathVariable}
-          pathLength="15"
-        />
+        {this.props.hidePath ? null : (
+          <path
+            id="menu-path"
+            fill="none"
+            stroke={this.state.pathColor}
+            stroke-width={this.state.pathWidth}
+            d={pathVariable}
+            pathLength="15"
+          />
+        )}
         {navDots}
       </svg>
     );
