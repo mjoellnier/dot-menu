@@ -1,8 +1,8 @@
 import React, { Component } from "react";
+import { Element, Link, scroller } from "react-scroll";
 import { ScrollPercentage } from "react-scroll-percentage";
 import ReactTooltip from "react-tooltip";
 import "./src/index.css";
-import { Link, scroller, Element } from "react-scroll";
 
 let keys = { 37: 1, 38: 1, 39: 1, 40: 1 };
 let pages;
@@ -30,7 +30,10 @@ function scrollFunction(event) {
       duration: 1500,
       delay: 0,
       smooth: true,
-      isDynamic: true
+      isDynamic: false,
+      ignoreCancelEvents: true,
+      spy: true,
+      hashSpy: true
     });
   } else if (event.deltaY > 0 && index < maxIndex) {
     index++;
@@ -38,7 +41,10 @@ function scrollFunction(event) {
       duration: 1500,
       delay: 0,
       smooth: true,
-      isDynamic: true
+      isDynamic: false,
+      ignoreCancelEvents: true,
+      spy: true,
+      hashSpy: true
     });
   }
   setTimeout(() => {
@@ -121,54 +127,59 @@ export default class DotMenu extends Component {
   };
 
   createDots = () => {
-    let navDots = [];
-    let y = 0;
-    let refs = [];
-    for (let i = 0; i < this.props.children.length; i++) {
-      y = y + 50;
-      refs[i] = React.createRef();
-      navDots.push(
-        <>
-          <Link to={"section_" + i} onClick={() => (index = i)}>
-            <circle
-              data-tip={this.props.children[i].props.title}
-              data-for="toolTipRemoteId"
-              cx="50"
-              cy={y}
-              r="7"
-              stroke={this.state.dotBorder}
-              stroke-width="2"
-              fill={this.state.dotFilling}
-              className="navDotCircle"
-              ref={refs[i]}
+    if (!this.props.hideDots) {
+      let navDots = [];
+      let y = 0;
+      let refs = [];
+      for (let i = 0; i < this.props.children.length; i++) {
+        y = y + 50;
+        refs[i] = React.createRef();
+        navDots.push(
+          <>
+            <Link smooth to={"section_" + i} onClick={() => (index = i)}>
+              <circle
+                data-tip={this.props.children[i].props.title}
+                data-for="toolTipRemoteId"
+                cx="50"
+                cy={y}
+                r="7"
+                stroke={this.state.dotBorder}
+                stroke-width="2"
+                fill={this.state.dotFilling}
+                className="navDotCircle"
+                ref={refs[i]}
+              />
+            </Link>
+          </>
+        );
+      }
+      let pathVariable =
+        "M 50,50  v" +
+        ((this.state.percentage - this.state.delta) / (1 - this.state.delta)) *
+          y;
+      return (
+        <svg
+          height={y + 25}
+          className={
+            "svgElements " + (this.state.percentage > 0 ? "fadeIn" : "fadeOut")
+          }
+        >
+          {this.props.hidePath ? null : (
+            <path
+              id="menu-path"
+              fill="none"
+              stroke={this.state.pathColor}
+              stroke-width={this.state.pathWidth}
+              d={pathVariable}
+              pathLength="15"
             />
-          </Link>
-        </>
+          )}
+          {navDots}
+        </svg>
       );
+    } else {
+      return null;
     }
-    let pathVariable =
-      "M 50,50  v" +
-      ((this.state.percentage - this.state.delta) / (1 - this.state.delta)) * y;
-    return (
-      <svg
-        height={y + 25}
-        className={
-          "svgElements " + (this.state.percentage > 0 ? "fadeIn" : "fadeOut")
-        }
-      >
-        {this.props.hidePath ? null : (
-          <path
-            id="menu-path"
-            fill="none"
-            stroke={this.state.pathColor}
-            stroke-width={this.state.pathWidth}
-            d={pathVariable}
-            pathLength="15"
-          />
-        )}
-        {navDots}
-      </svg>
-    );
   };
 
   render() {

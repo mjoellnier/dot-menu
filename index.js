@@ -7,13 +7,13 @@ exports["default"] = void 0;
 
 var _react = _interopRequireWildcard(require("react"));
 
+var _reactScroll = require("react-scroll");
+
 var _reactScrollPercentage = require("react-scroll-percentage");
 
 var _reactTooltip = _interopRequireDefault(require("react-tooltip"));
 
 require("./src/index.css");
-
-var _reactScroll = require("react-scroll");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
@@ -74,7 +74,10 @@ function scrollFunction(event) {
       duration: 1500,
       delay: 0,
       smooth: true,
-      isDynamic: true
+      isDynamic: false,
+      ignoreCancelEvents: true,
+      spy: true,
+      hashSpy: true
     });
   } else if (event.deltaY > 0 && index < maxIndex) {
     index++;
@@ -83,7 +86,10 @@ function scrollFunction(event) {
       duration: 1500,
       delay: 0,
       smooth: true,
-      isDynamic: true
+      isDynamic: false,
+      ignoreCancelEvents: true,
+      spy: true,
+      hashSpy: true
     });
   }
 
@@ -161,48 +167,53 @@ function (_Component) {
     });
 
     _defineProperty(_assertThisInitialized(_this), "createDots", function () {
-      var navDots = [];
-      var y = 0;
-      var refs = [];
+      if (!_this.props.hideDots) {
+        var navDots = [];
+        var y = 0;
+        var refs = [];
 
-      var _loop = function _loop(i) {
-        y = y + 50;
-        refs[i] = _react["default"].createRef();
-        navDots.push(_react["default"].createElement(_react["default"].Fragment, null, _react["default"].createElement(_reactScroll.Link, {
-          to: "section_" + i,
-          onClick: function onClick() {
-            return index = i;
-          }
-        }, _react["default"].createElement("circle", {
-          "data-tip": _this.props.children[i].props.title,
-          "data-for": "toolTipRemoteId",
-          cx: "50",
-          cy: y,
-          r: "7",
-          stroke: _this.state.dotBorder,
-          "stroke-width": "2",
-          fill: _this.state.dotFilling,
-          className: "navDotCircle",
-          ref: refs[i]
-        }))));
-      };
+        var _loop = function _loop(i) {
+          y = y + 50;
+          refs[i] = _react["default"].createRef();
+          navDots.push(_react["default"].createElement(_react["default"].Fragment, null, _react["default"].createElement(_reactScroll.Link, {
+            smooth: true,
+            to: "section_" + i,
+            onClick: function onClick() {
+              return index = i;
+            }
+          }, _react["default"].createElement("circle", {
+            "data-tip": _this.props.children[i].props.title,
+            "data-for": "toolTipRemoteId",
+            cx: "50",
+            cy: y,
+            r: "7",
+            stroke: _this.state.dotBorder,
+            "stroke-width": "2",
+            fill: _this.state.dotFilling,
+            className: "navDotCircle",
+            ref: refs[i]
+          }))));
+        };
 
-      for (var i = 0; i < _this.props.children.length; i++) {
-        _loop(i);
+        for (var i = 0; i < _this.props.children.length; i++) {
+          _loop(i);
+        }
+
+        var pathVariable = "M 50,50  v" + (_this.state.percentage - _this.state.delta) / (1 - _this.state.delta) * y;
+        return _react["default"].createElement("svg", {
+          height: y + 25,
+          className: "svgElements " + (_this.state.percentage > 0 ? "fadeIn" : "fadeOut")
+        }, _this.props.hidePath ? null : _react["default"].createElement("path", {
+          id: "menu-path",
+          fill: "none",
+          stroke: _this.state.pathColor,
+          "stroke-width": _this.state.pathWidth,
+          d: pathVariable,
+          pathLength: "15"
+        }), navDots);
+      } else {
+        return null;
       }
-
-      var pathVariable = "M 50,50  v" + (_this.state.percentage - _this.state.delta) / (1 - _this.state.delta) * y;
-      return _react["default"].createElement("svg", {
-        height: y + 25,
-        className: "svgElements " + (_this.state.percentage > 0 ? "fadeIn" : "fadeOut")
-      }, _this.props.hidePath ? null : _react["default"].createElement("path", {
-        id: "menu-path",
-        fill: "none",
-        stroke: _this.state.pathColor,
-        "stroke-width": _this.state.pathWidth,
-        d: pathVariable,
-        pathLength: "15"
-      }), navDots);
     });
 
     _this.state = {
