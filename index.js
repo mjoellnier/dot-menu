@@ -49,71 +49,6 @@ var pages;
 var index = 0;
 var maxIndex = -1;
 
-function preventDefault(e) {
-  e = e || window.event;
-  if (e.preventDefault) e.preventDefault();
-  e.returnValue = false;
-}
-
-function preventDefaultForScrollKeys(e) {
-  if (keys[e.keyCode]) {
-    preventDefault(e);
-    return false;
-  }
-}
-
-function scrollFunction(event) {
-  window.removeEventListener("wheel", scrollFunction, {
-    passive: true
-  });
-
-  if (event.deltaY < 0 && index > 0) {
-    index--;
-
-    _reactScroll.scroller.scrollTo("section_" + index, {
-      duration: 1500,
-      delay: 0,
-      smooth: true,
-      isDynamic: false,
-      ignoreCancelEvents: true,
-      spy: true,
-      hashSpy: true
-    });
-  } else if (event.deltaY > 0 && index < maxIndex) {
-    index++;
-
-    _reactScroll.scroller.scrollTo("section_" + index, {
-      duration: 1500,
-      delay: 0,
-      smooth: true,
-      isDynamic: false,
-      ignoreCancelEvents: true,
-      spy: true,
-      hashSpy: true
-    });
-  }
-
-  setTimeout(function () {
-    window.addEventListener("wheel", scrollFunction);
-  }, 1500);
-}
-
-function disableScroll() {
-  if (window.addEventListener) // older FF
-    window.addEventListener("DOMMouseScroll", preventDefault, false);
-  document.addEventListener("wheel", preventDefault, {
-    passive: false
-  }); // Disable scrolling in Chrome
-
-  window.onwheel = preventDefault; // modern standard
-
-  window.onmousewheel = document.onmousewheel = preventDefault; // older browsers, IE
-
-  window.ontouchmove = preventDefault; // mobile
-
-  document.onkeydown = preventDefaultForScrollKeys;
-}
-
 var DotMenu =
 /*#__PURE__*/
 function (_Component) {
@@ -136,7 +71,7 @@ function (_Component) {
         }
 
         if (content.props.backgroundColor === "RANDOM") {
-          backgroundColor = _this.getRandomColor();
+          backgroundColor = getRandomColor();
         }
 
         return _react["default"].createElement(_reactScroll.Element, {
@@ -153,17 +88,6 @@ function (_Component) {
           }
         }, content));
       });
-    });
-
-    _defineProperty(_assertThisInitialized(_this), "getRandomColor", function () {
-      var letters = "0123456789ABCDEF";
-      var color = "#";
-
-      for (var i = 0; i < 6; i++) {
-        color += letters[Math.floor(Math.random() * 16)];
-      }
-
-      return color;
     });
 
     _defineProperty(_assertThisInitialized(_this), "createDots", function () {
@@ -276,7 +200,84 @@ function (_Component) {
   return DotMenu;
 }(_react.Component);
 
-exports["default"] = DotMenu;
+var getRandomColor = function getRandomColor() {
+  var letters = "0123456789ABCDEF";
+  var color = "#";
+
+  for (var i = 0; i < 6; i++) {
+    color += letters[Math.floor(Math.random() * 16)];
+  }
+
+  return color;
+};
+
+var preventDefault = function preventDefault(e) {
+  e = e || window.event;
+  if (e.preventDefault) e.preventDefault();
+  e.returnValue = false;
+};
+
+var preventDefaultForScrollKeys = function preventDefaultForScrollKeys(e) {
+  if (keys[e.keyCode]) {
+    preventDefault(e);
+    return false;
+  }
+};
+
+var scrollFunction = function scrollFunction(event) {
+  window.removeEventListener("wheel", scrollFunction, {
+    passive: true
+  });
+
+  if (event.deltaY < 0 && index > 0) {
+    index--;
+
+    _reactScroll.scroller.scrollTo("section_" + index, {
+      duration: 1500,
+      delay: 0,
+      smooth: true,
+      isDynamic: false,
+      ignoreCancelEvents: true,
+      spy: true,
+      hashSpy: true
+    });
+  } else if (event.deltaY > 0 && index < maxIndex) {
+    index++;
+
+    _reactScroll.scroller.scrollTo("section_" + index, {
+      duration: 1500,
+      delay: 0,
+      smooth: true,
+      isDynamic: false,
+      ignoreCancelEvents: true,
+      spy: true,
+      hashSpy: true
+    });
+  }
+
+  setTimeout(function () {
+    window.addEventListener("wheel", scrollFunction);
+  }, 1500);
+};
+
+var disableScroll = function disableScroll() {
+  if (window.addEventListener) // older FF
+    window.addEventListener("DOMMouseScroll", preventDefault, false);
+  document.addEventListener("wheel", preventDefault, {
+    passive: false
+  }); // Disable scrolling in Chrome
+
+  window.onwheel = preventDefault; // modern standard
+
+  window.onmousewheel = document.onmousewheel = preventDefault; // older browsers, IE
+
+  window.ontouchmove = preventDefault; // mobile
+
+  document.onkeydown = preventDefaultForScrollKeys;
+};
+
+var _default = DotMenu;
+exports["default"] = _default;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {

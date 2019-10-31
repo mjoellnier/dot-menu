@@ -9,61 +9,7 @@ let pages;
 let index = 0;
 let maxIndex = -1;
 
-function preventDefault(e) {
-  e = e || window.event;
-  if (e.preventDefault) e.preventDefault();
-  e.returnValue = false;
-}
-
-function preventDefaultForScrollKeys(e) {
-  if (keys[e.keyCode]) {
-    preventDefault(e);
-    return false;
-  }
-}
-
-function scrollFunction(event) {
-  window.removeEventListener("wheel", scrollFunction, { passive: true });
-  if (event.deltaY < 0 && index > 0) {
-    index--;
-    scroller.scrollTo("section_" + index, {
-      duration: 1500,
-      delay: 0,
-      smooth: true,
-      isDynamic: false,
-      ignoreCancelEvents: true,
-      spy: true,
-      hashSpy: true
-    });
-  } else if (event.deltaY > 0 && index < maxIndex) {
-    index++;
-    scroller.scrollTo("section_" + index, {
-      duration: 1500,
-      delay: 0,
-      smooth: true,
-      isDynamic: false,
-      ignoreCancelEvents: true,
-      spy: true,
-      hashSpy: true
-    });
-  }
-  setTimeout(() => {
-    window.addEventListener("wheel", scrollFunction);
-  }, 1500);
-}
-
-function disableScroll() {
-  if (window.addEventListener)
-    // older FF
-    window.addEventListener("DOMMouseScroll", preventDefault, false);
-  document.addEventListener("wheel", preventDefault, { passive: false }); // Disable scrolling in Chrome
-  window.onwheel = preventDefault; // modern standard
-  window.onmousewheel = document.onmousewheel = preventDefault; // older browsers, IE
-  window.ontouchmove = preventDefault; // mobile
-  document.onkeydown = preventDefaultForScrollKeys;
-}
-
-export default class DotMenu extends Component {
+class DotMenu extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -97,7 +43,7 @@ export default class DotMenu extends Component {
         backgroundColor = content.props.backgroundColor;
       }
       if (content.props.backgroundColor === "RANDOM") {
-        backgroundColor = this.getRandomColor();
+        backgroundColor = getRandomColor();
       }
       return (
         <Element name={"section_" + index}>
@@ -115,15 +61,6 @@ export default class DotMenu extends Component {
         </Element>
       );
     });
-  };
-
-  getRandomColor = () => {
-    var letters = "0123456789ABCDEF";
-    var color = "#";
-    for (var i = 0; i < 6; i++) {
-      color += letters[Math.floor(Math.random() * 16)];
-    }
-    return color;
   };
 
   createDots = () => {
@@ -212,3 +149,68 @@ export default class DotMenu extends Component {
     );
   }
 }
+
+const getRandomColor = () => {
+  var letters = "0123456789ABCDEF";
+  var color = "#";
+  for (var i = 0; i < 6; i++) {
+    color += letters[Math.floor(Math.random() * 16)];
+  }
+  return color;
+};
+
+const preventDefault = e => {
+  e = e || window.event;
+  if (e.preventDefault) e.preventDefault();
+  e.returnValue = false;
+};
+
+const preventDefaultForScrollKeys = e => {
+  if (keys[e.keyCode]) {
+    preventDefault(e);
+    return false;
+  }
+};
+
+const scrollFunction = event => {
+  window.removeEventListener("wheel", scrollFunction, { passive: true });
+  if (event.deltaY < 0 && index > 0) {
+    index--;
+    scroller.scrollTo("section_" + index, {
+      duration: 1500,
+      delay: 0,
+      smooth: true,
+      isDynamic: false,
+      ignoreCancelEvents: true,
+      spy: true,
+      hashSpy: true
+    });
+  } else if (event.deltaY > 0 && index < maxIndex) {
+    index++;
+    scroller.scrollTo("section_" + index, {
+      duration: 1500,
+      delay: 0,
+      smooth: true,
+      isDynamic: false,
+      ignoreCancelEvents: true,
+      spy: true,
+      hashSpy: true
+    });
+  }
+  setTimeout(() => {
+    window.addEventListener("wheel", scrollFunction);
+  }, 1500);
+};
+
+const disableScroll = () => {
+  if (window.addEventListener)
+    // older FF
+    window.addEventListener("DOMMouseScroll", preventDefault, false);
+  document.addEventListener("wheel", preventDefault, { passive: false }); // Disable scrolling in Chrome
+  window.onwheel = preventDefault; // modern standard
+  window.onmousewheel = document.onmousewheel = preventDefault; // older browsers, IE
+  window.ontouchmove = preventDefault; // mobile
+  document.onkeydown = preventDefaultForScrollKeys;
+};
+
+export default DotMenu;
