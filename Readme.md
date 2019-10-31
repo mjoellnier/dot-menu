@@ -50,14 +50,16 @@ The above example code creates the example which can be seen in the gif.
 
 **`DotMenu` properties**
 
-| Name       | Values      | Default  | Description                                                                       |
-| ---------- | ----------- | -------- | --------------------------------------------------------------------------------- |
-| right      | true\|false | false    | Determines if the menu is rendered on the right or left                           |
-| dotFilling | string      | darkgray | Determines the color of the nav dots filling. Give it a _normal_ HEX/color string |
-| dotBorder  | string      | gray     | Determines the color of the nav dots border. Give it a _normal_ HEX/color string  |
-| pathColor  | string      | black    | Determines the color of the propress path. Give it a _normal_ HEX/color string    |
-| pathWidth  | string      | "2"      | Determines the width of the progress path. Give it an integer wrapped as string   |
-| hidePath   | true\|false | false    | Hides the scroll progress bar if set to true                                      |
+| Name            | Values      | Default  | Description                                                                       |
+| --------------- | ----------- | -------- | --------------------------------------------------------------------------------- |
+| right           | true\|false | false    | Determines if the menu is rendered on the right or left                           |
+| dotFilling      | string      | darkgray | Determines the color of the nav dots filling. Give it a _normal_ HEX/color string |
+| dotBorder       | string      | gray     | Determines the color of the nav dots border. Give it a _normal_ HEX/color string  |
+| hideDots        | true\|false | false    | Determines if the nav dots are hidden                                             |
+| pathColor       | string      | black    | Determines the color of the propress path. Give it a _normal_ HEX/color string    |
+| pathWidth       | string      | "2"      | Determines the width of the progress path. Give it an integer wrapped as string   |
+| hidePath        | true\|false | false    | Determines if the progress path is hidden                                         |
+| windowScrolling | true\|false | false    | Determines if the `DotMenuPage` elements are scrolled as a hole                   |
 
 **`DotMenuPage` properties**
 
@@ -68,10 +70,11 @@ The above example code creates the example which can be seen in the gif.
 
 ## Changelog
 
-| Version | Changes                                          |
-| ------- | ------------------------------------------------ |
-| 1.0.0   | Initial Release                                  |
-| 1.0.1   | Adding smooth scrolling to page on nav dot click |
+| Version | Changes                                                    |
+| ------- | ---------------------------------------------------------- |
+| 1.0.0   | Initial Release                                            |
+| 1.0.1   | Adding smooth scrolling to page on nav dot click           |
+| 1.1.0   | Adding `DotMenuPage` element scrolling and more properties |
 
 ## Todo
 
