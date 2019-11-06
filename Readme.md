@@ -77,6 +77,7 @@ export default App;
 | 1.0.1   | Adding smooth scrolling to page on nav dot click           |
 | 1.1.0   | Adding `DotMenuPage` element scrolling and more properties |
 | 1.2.0   | Adding background image and styling feature to pages       |
+| 1.2.1   | Code cleaning and smaller fixes                            |
 
 ## Todo
 
