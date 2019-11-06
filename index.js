@@ -103,7 +103,8 @@ function (_Component) {
         }
 
         return _react["default"].createElement(_reactScroll.Element, {
-          name: "section_" + index
+          name: "section_" + index,
+          key: "element_" + index
         }, _react["default"].createElement("div", {
           id: "section_" + index,
           style: customStyle,
@@ -123,24 +124,26 @@ function (_Component) {
         var _loop = function _loop(i) {
           y = y + 50;
           refs[i] = _react["default"].createRef();
-          navDots.push(_react["default"].createElement(_react["default"].Fragment, null, _react["default"].createElement(_reactScroll.Link, {
+          navDots.push(_react["default"].createElement(_reactScroll.Link, {
             smooth: true,
             to: "section_" + i,
             onClick: function onClick() {
               return index = i;
-            }
+            },
+            key: i
           }, _react["default"].createElement("circle", {
             "data-tip": _this.props.children[i].props.title,
             "data-for": "toolTipRemoteId",
+            key: "circle_" + i,
             cx: "50",
             cy: y,
             r: "7",
             stroke: _this.state.dotBorder,
-            "stroke-width": "2",
+            strokeWidth: "2",
             fill: _this.state.dotFilling,
             className: "navDotCircle",
             ref: refs[i]
-          }))));
+          })));
         };
 
         for (var i = 0; i < _this.props.children.length; i++) {
@@ -149,15 +152,17 @@ function (_Component) {
 
         var pathVariable = "M 50,50  v" + (_this.state.percentage - _this.state.delta) / (1 - _this.state.delta) * y;
         return _react["default"].createElement("svg", {
+          key: "svgBox",
           height: y + 25,
           className: "svgElements " + (_this.state.percentage > 0 ? "fadeIn" : "fadeOut")
         }, _this.props.hidePath ? null : _react["default"].createElement("path", {
           id: "menu-path",
           fill: "none",
           stroke: _this.state.pathColor,
-          "stroke-width": _this.state.pathWidth,
+          strokeWidth: _this.state.pathWidth,
           d: pathVariable,
-          pathLength: "15"
+          pathLength: "15",
+          key: "svgPath"
         }), navDots);
       } else {
         return null;
@@ -200,6 +205,7 @@ function (_Component) {
       return _react["default"].createElement(_reactScrollPercentage.ScrollPercentage, {
         as: "div",
         threshold: "0",
+        key: "scrollPercentage",
         onChange: function onChange(percentage, entry) {
           _this2.setState({
             percentage: percentage
@@ -207,6 +213,7 @@ function (_Component) {
         }
       }, _react["default"].createElement("div", {
         className: "svgWrapper",
+        key: "svgWrapperDiv",
         style: this.props.right ? {
           alignItems: "flex-end"
         } : {

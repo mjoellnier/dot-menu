@@ -67,7 +67,7 @@ class DotMenu extends Component {
         customStyle = { ...customStyle, ...content.props.style };
       }
       return (
-        <Element name={"section_" + index}>
+        <Element name={"section_" + index} key={"element_" + index}>
           <div
             id={"section_" + index}
             style={customStyle}
@@ -89,22 +89,21 @@ class DotMenu extends Component {
         y = y + 50;
         refs[i] = React.createRef();
         navDots.push(
-          <>
-            <Link smooth to={"section_" + i} onClick={() => (index = i)}>
-              <circle
-                data-tip={this.props.children[i].props.title}
-                data-for="toolTipRemoteId"
-                cx="50"
-                cy={y}
-                r="7"
-                stroke={this.state.dotBorder}
-                stroke-width="2"
-                fill={this.state.dotFilling}
-                className="navDotCircle"
-                ref={refs[i]}
-              />
-            </Link>
-          </>
+          <Link smooth to={"section_" + i} onClick={() => (index = i)} key={i}>
+            <circle
+              data-tip={this.props.children[i].props.title}
+              data-for="toolTipRemoteId"
+              key={"circle_" + i}
+              cx="50"
+              cy={y}
+              r="7"
+              stroke={this.state.dotBorder}
+              strokeWidth="2"
+              fill={this.state.dotFilling}
+              className="navDotCircle"
+              ref={refs[i]}
+            />
+          </Link>
         );
       }
       let pathVariable =
@@ -113,6 +112,7 @@ class DotMenu extends Component {
           y;
       return (
         <svg
+          key="svgBox"
           height={y + 25}
           className={
             "svgElements " + (this.state.percentage > 0 ? "fadeIn" : "fadeOut")
@@ -123,9 +123,10 @@ class DotMenu extends Component {
               id="menu-path"
               fill="none"
               stroke={this.state.pathColor}
-              stroke-width={this.state.pathWidth}
+              strokeWidth={this.state.pathWidth}
               d={pathVariable}
               pathLength="15"
+              key="svgPath"
             />
           )}
           {navDots}
@@ -141,12 +142,14 @@ class DotMenu extends Component {
       <ScrollPercentage
         as="div"
         threshold="0"
+        key="scrollPercentage"
         onChange={(percentage, entry) => {
           this.setState({ percentage: percentage });
         }}
       >
         <div
           className="svgWrapper"
+          key="svgWrapperDiv"
           style={
             this.props.right
               ? { alignItems: "flex-end" }
