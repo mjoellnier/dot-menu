@@ -40,20 +40,38 @@ class DotMenu extends Component {
       maxIndex++;
       let backgroundColor = "";
       if (content.props.backgroundColor) {
-        backgroundColor = content.props.backgroundColor;
+        if (content.props.backgroundColor === "RANDOM") {
+          backgroundColor = getRandomColor();
+        } else {
+          backgroundColor = content.props.backgroundColor;
+        }
       }
-      if (content.props.backgroundColor === "RANDOM") {
-        backgroundColor = getRandomColor();
+      let backgroundImage;
+      if (content.props.backgroundImage) {
+        console.log("BACKGROUND!", content.props.backgroundImage);
+        if (content.props.backgroundImage === "RANDOM") {
+          backgroundImage = "https://source.unsplash.com/random/1280x800";
+        } else {
+          backgroundImage = content.props.backgroundImage;
+        }
+      }
+      let customStyle = {
+        width: "100vw",
+        height: "100vh",
+        backgroundColor: backgroundColor,
+        backgroundImage: `url(${backgroundImage})`,
+        backgroundPosition: "center",
+        backgroundSize: "cover",
+        backgroundRepeat: "no-repeat"
+      };
+      if (content.props.style) {
+        customStyle = { ...customStyle, ...content.props.style };
       }
       return (
         <Element name={"section_" + index}>
           <div
             id={"section_" + index}
-            style={{
-              width: "100vw",
-              height: "100vh",
-              backgroundColor: backgroundColor
-            }}
+            style={customStyle}
             onScroll={event => console.log("event: ", event)}
           >
             {content}
