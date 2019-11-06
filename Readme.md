@@ -21,6 +21,7 @@ npm install @mjoellnier/dot-menu --save
 ```javascript
 import DotMenu, { DotMenuPage } from "@mjoellnier/dot-menu";
 import React from "react";
+import testImage from "./testImage.jpg";
 
 const App = () => {
   return (
@@ -34,7 +35,7 @@ const App = () => {
       <DotMenuPage backgroundColor={"RANDOM"} title={"Page 3"}>
         Hello 3
       </DotMenuPage>
-      <DotMenuPage backgroundColor={"RANDOM"} title={"Page 4"}>
+      <DotMenuPage backgroundImage={testImage} title={"Page 4"}>
         Hello 4
       </DotMenuPage>
     </DotMenu>
@@ -43,8 +44,6 @@ const App = () => {
 
 export default App;
 ```
-
-The above example code creates the example which can be seen in the gif.
 
 ## Properties
 
@@ -63,10 +62,12 @@ The above example code creates the example which can be seen in the gif.
 
 **`DotMenuPage` properties**
 
-| Name            | Values           | Default | Description                                                                                                    |
-| --------------- | ---------------- | ------- | -------------------------------------------------------------------------------------------------------------- |
-| backgroundColor | string\|"RANDOM" | none    | The page background color. Give it a _normal_ HEX/color string or the string _RANDOM_ when you love surprises! |
-| title           | string           | none    | The title to be rendered in the mouse over box                                                                 |
+| Name            | Values             | Default | Description                                                                                                                                                                                                                                             |
+| --------------- | ------------------ | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| backgroundColor | string \| "RANDOM" | none    | The page background color. Give it a _normal_ HEX/color string or the string `RANDOM` when you love surprises!                                                                                                                                          |
+| title           | string             | none    | The title to be rendered in the mouse over box                                                                                                                                                                                                          |
+| backgroundImage | string \| "RANDOM" | none    | The background image for the page. It is rendered fullscreen and resizes with the window/screen size. Use `RANDOM` to get a surprise image from [Unsplash](https://source.unsplash.com/). Check the code example above to see how to add a local image. |
+| style           | Object             | none    | A styling object that is handed through to the page element. With it you can override every styling item!                                                                                                                                               |
 
 ## Changelog
 
@@ -75,10 +76,13 @@ The above example code creates the example which can be seen in the gif.
 | 1.0.0   | Initial Release                                            |
 | 1.0.1   | Adding smooth scrolling to page on nav dot click           |
 | 1.1.0   | Adding `DotMenuPage` element scrolling and more properties |
+| 1.1.1   | Adding background image and styling feature to pages       |
 
 ## Todo
 
 - Write tests!
+- Improve performance for scrolling!
+- Hide menu dots (smoothly) on mobile
 - ~~Implement scrolling when pressing on a nav dot~~
 - Experiment with mobile
 
