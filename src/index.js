@@ -48,7 +48,6 @@ class DotMenu extends Component {
       }
       let backgroundImage;
       if (content.props.backgroundImage) {
-        console.log("BACKGROUND!", content.props.backgroundImage);
         if (content.props.backgroundImage === "RANDOM") {
           backgroundImage = "https://source.unsplash.com/random/1280x800";
         } else {
