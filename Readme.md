@@ -49,42 +49,45 @@ export default App;
 
 **`DotMenu` properties**
 
-| Name            | Values      | Default  | Description                                                                       |
-| --------------- | ----------- | -------- | --------------------------------------------------------------------------------- |
-| right           | true\|false | false    | Determines if the menu is rendered on the right or left                           |
-| dotFilling      | string      | darkgray | Determines the color of the nav dots filling. Give it a _normal_ HEX/color string |
-| dotBorder       | string      | gray     | Determines the color of the nav dots border. Give it a _normal_ HEX/color string  |
-| hideDots        | true\|false | false    | Determines if the nav dots are hidden                                             |
-| pathColor       | string      | black    | Determines the color of the propress path. Give it a _normal_ HEX/color string    |
-| pathWidth       | string      | "2"      | Determines the width of the progress path. Give it an integer wrapped as string   |
-| hidePath        | true\|false | false    | Determines if the progress path is hidden                                         |
-| windowScrolling | true\|false | false    | Determines if the `DotMenuPage` elements are scrolled as a hole                   |
+| Name                   | Values      | Default  | Description                                                                       |
+| ---------------------- | ----------- | -------- | --------------------------------------------------------------------------------- |
+| dotFilling             | string      | darkgray | Determines the color of the nav dots filling. Give it a _normal_ HEX/color string |
+| dotBorder              | string      | gray     | Determines the color of the nav dots border. Give it a _normal_ HEX/color string  |
+| hideDots               | true\|false | false    | Determines if the nav dots are hidden                                             |
+| hidePath               | true\|false | false    | Determines if the progress path is hidden                                         |
+| pathColor              | string      | black    | Determines the color of the propress path. Give it a _normal_ HEX/color string    |
+| pathWidth              | string      | "2"      | Determines the width of the progress path. Give it an integer wrapped as string   |
+| right                  | true\|false | false    | Determines if the menu is rendered on the right or left                           |
+| showMenuOnSmallScreens | true\|false | false    | Determines if the menu is shown on small displays                                 |
+| windowScrolling        | true\|false | false    | Determines if the `DotMenuPage` elements are scrolled as a hole                   |
 
 **`DotMenuPage` properties**
 
 | Name            | Values             | Default | Description                                                                                                                                                                                                                                             |
 | --------------- | ------------------ | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | backgroundColor | string \| "RANDOM" | none    | The page background color. Give it a _normal_ HEX/color string or the string `RANDOM` when you love surprises!                                                                                                                                          |
-| title           | string             | none    | The title to be rendered in the mouse over box                                                                                                                                                                                                          |
 | backgroundImage | string \| "RANDOM" | none    | The background image for the page. It is rendered fullscreen and resizes with the window/screen size. Use `RANDOM` to get a surprise image from [Unsplash](https://source.unsplash.com/). Check the code example above to see how to add a local image. |
 | style           | Object             | none    | A styling object that is handed through to the page element. With it you can override every styling item!                                                                                                                                               |
+| title           | string             | none    | The title to be rendered in the mouse over box                                                                                                                                                                                                          |
 
 ## Changelog
 
-| Version | Changes                                                    |
-| ------- | ---------------------------------------------------------- |
-| 1.0.0   | Initial Release                                            |
-| 1.0.1   | Adding smooth scrolling to page on nav dot click           |
-| 1.1.0   | Adding `DotMenuPage` element scrolling and more properties |
-| 1.2.0   | Adding background image and styling feature to pages       |
-| 1.2.1   | Code cleaning and smaller fixes                            |
+| Version | Changes                                                         |
+| ------- | --------------------------------------------------------------- |
+| 1.0.0   | Initial Release                                                 |
+| 1.0.1   | Adding smooth scrolling to page on nav dot click                |
+| 1.1.0   | Adding `DotMenuPage` element scrolling and more properties      |
+| 1.2.0   | Adding background image and styling feature to pages            |
+| 1.2.1   | Code cleaning and smaller fixes                                 |
+| 1.3.0   | Dot Menu is hidden on small screens (can be shown via property) |
 
 ## Todo
 
 - Write tests!
 - Improve performance for scrolling!
-- Hide menu dots (smoothly) on mobile
+- ~~Hide menu dots (smoothly) on mobile~~
 - ~~Implement scrolling when pressing on a nav dot~~
 - Experiment with mobile
+- Publish example project
 
 [example]: ./example.gif "Dot Menu  example gif"
