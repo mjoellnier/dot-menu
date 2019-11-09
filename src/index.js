@@ -114,6 +114,7 @@ class DotMenu extends Component {
         <svg
           key="svgBox"
           height={y + 25}
+          id="menuDotWrapper"
           className={
             "svgElements " + (this.state.percentage > 0 ? "fadeIn" : "fadeOut")
           }

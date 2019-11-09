@@ -40,3 +40,18 @@ circle:hover {
   flex-direction: column;
   justify-content: center;
 }
+
+#menuDotWrapper {
+  transition: 0.25s;
+  transition-timing-function: ease-out;
+  transform: translateX(0);
+  opacity: 1;
+}
+
+@media (max-width: 768px) {
+  #menuDotWrapper {
+    transform: translateX(-130%);
+    transition-timing-function: ease-in;
+    transition: 0.2s;
+  }
+}
