@@ -154,8 +154,7 @@ function (_Component) {
         return _react["default"].createElement("svg", {
           key: "svgBox",
           height: y + 25,
-          id: "menuDotWrapper",
-          className: "svgElements " + (_this.state.percentage > 0 ? "fadeIn" : "fadeOut")
+          className: "svgElements " + (_this.state.percentage > 0 ? "fadeIn " : "fadeOut ") + (_this.props.showMenuOnSmallScreens ? " " : "hideOnSmallScreens ")
         }, _this.props.hidePath ? null : _react["default"].createElement("path", {
           id: "menu-path",
           fill: "none",
